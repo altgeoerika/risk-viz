@@ -1,3 +1,44 @@
 {
-  "extends": "next/core-web-vitals"
+  "parser": "@typescript-eslint/parser",
+  "root": true,
+  "extends": [
+    "next/core-web-vitals",
+    // "airbnb-typescript",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "import"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/semi": "off",
+    "array-bracket-spacing": ["error", "never"],
+    "comma-dangle": ["error", "always-multiline"],
+    "consistent-return": "off",
+    "eol-last": ["error", "always"],
+    "import/newline-after-import": ["error", { "count": 2 }],
+    "import/prefer-default-export": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "max-len": "off",
+    "no-console": ["warn", { "allow": ["error", "debug"] }],
+    "no-multiple-empty-lines": ["error", { "max": 2, "maxBOF": 0, "maxEOF": 2 }],
+    "no-template-curly-in-string": "off",
+    "no-trailing-spaces": ["error"],
+    "no-useless-escape": "off",
+    "object-curly-spacing": ["error", "always"],
+    "react/jsx-uses-react": "off",
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": "off",
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "semi": ["error", "never"]
+  },
+  "ignorePatterns": ["*.js", "**/*.js", "*.jsx", "**/*.jsx", "*.test.*"]
 }
