@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 
-import { getRiskData } from '../utils/getData/getData'
+import { getRiskData } from '../utils/get-data'
 import { useStoreState, useStoreActions } from '../store'
 
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getRiskData().then(data => update({ data }))
-  }, [])
+  }, [update])
 
   return (
     <>
