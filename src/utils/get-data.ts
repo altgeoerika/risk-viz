@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { S3 } from '@aws-sdk/client-s3'
 import csv from 'csvtojson'
 
-import { RiskDataObject } from '../types'
+import { RiskDataObject } from './types'
 
 
 const s3 = new S3({
