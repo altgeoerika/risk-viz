@@ -1,7 +1,8 @@
+import { cache } from 'react'
 import { S3 } from '@aws-sdk/client-s3'
 import csv from 'csvtojson'
 
-import { RiskDataObject } from '../../utils/getData/types'
+import { RiskDataObject } from '../types'
 
 
 const s3 = new S3({
@@ -20,7 +21,7 @@ const getParams: { Bucket: string, Key: string } = {
   Key: 'rtai_sample_data.csv',
 }
 
-export const getRiskData = async () => {
+export const getRiskData = cache(async () => {
   try {
     const getObjectResponse: {Body?: any} = await s3.getObject(getParams)
     const fileBodyString: string = await getObjectResponse.Body?.transformToString() || ''
@@ -35,4 +36,4 @@ export const getRiskData = async () => {
   } catch (err) {
     console.error(err)
   }
-}
+})
