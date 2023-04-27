@@ -1094,15 +1094,14 @@
   optionalDependencies:
     global-agent "^3.0.0"
 
-"@eqworks/lumen-labs@^0.1.0-alpha.80":
-  version "0.1.0-alpha.80"
-  resolved "https://npm.pkg.github.com/download/@EQWorks/lumen-labs/0.1.0-alpha.80/dbf38f543b64a3b41c7cd8e612958523866b0d10"
-  integrity sha512-v7fs4HApsrAlGciwUFRmRJ/l5Su2QAUk350O3Tr3io7co24lkS4CWLjZt5I5KIWmKQENln48/5OSp6jZSZcdIQ==
+"@eqworks/lumen-labs@0.1.0-alpha.39":
+  version "0.1.0-alpha.39"
+  resolved "https://npm.pkg.github.com/download/@EQWorks/lumen-labs/0.1.0-alpha.39/02ac28fec367a09044a98e8bb6de4870bf2912fc#02ac28fec367a09044a98e8bb6de4870bf2912fc"
+  integrity sha512-3JBec19wSv5RmKtX5xS/99JGFnXLxdSmYEY2guPais0m5fr61Fd8mgAKhnuV25vrIabyCceaKwgcpoRpTszACw==
   dependencies:
     "@headlessui/react" "^1.4.0"
     clsx "^1.1.1"
     goober "^2.0.39"
-    moment "^2.29.1"
     prop-types "^15.7.2"
     react-resize-detector "^6.7.6"
     react-virtualized-auto-sizer "^1.0.5"
@@ -2308,7 +2307,7 @@
 
 "@types/resize-observer-browser@^0.1.6":
   version "0.1.7"
-  resolved "https://registry.npmjs.org/@types/resize-observer-browser/-/resize-observer-browser-0.1.7.tgz"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.7.tgz#294aaadf24ac6580b8fbd1fe3ab7b59fe85f9ef3"
   integrity sha512-G9eN0Sn0ii9PWQ3Vl72jDPgeJwRWhv2Qk/nQkJuWmRmOB4HX3/BhD5SE1dZs/hzPZL/WKnvF0RHdTSG54QJFyg==
 
 "@types/responselike@^1.0.0":
@@ -2938,7 +2937,7 @@ clone-response@1.0.2, clone-response@^1.0.2:
 
 clsx@^1.1.1:
   version "1.2.1"
-  resolved "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 cmake-js@^6.3.2:
@@ -5007,7 +5006,7 @@ math.gl@^3.6.2:
 
 "memoize-one@>=3.1.1 <6":
   version "5.2.1"
-  resolved "https://registry.npmjs.org/memoize-one/-/memoize-one-5.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.2.1.tgz#8337aa3c4335581839ec01c3d594090cebe8f00e"
   integrity sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
 
 memory-stream@0:
@@ -5164,11 +5163,6 @@ mkdirp@^1.0.3:
   version "1.0.4"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
-moment@^2.29.1:
-  version "2.29.4"
-  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mqtt-packet@^6.8.0:
   version "6.10.0"
@@ -5829,7 +5823,7 @@ react-query@^2.12.1:
 
 react-resize-detector@^6.7.6:
   version "6.7.8"
-  resolved "https://registry.npmjs.org/react-resize-detector/-/react-resize-detector-6.7.8.tgz"
+  resolved "https://registry.yarnpkg.com/react-resize-detector/-/react-resize-detector-6.7.8.tgz#318c85d1335e50f99d4fb8eb9ec34e066db597d0"
   integrity sha512-0FaEcUBAbn+pq3PT5a9hHRebUfuS1SRLGLpIw8LydU7zX429I6XJgKerKAMPsJH0qWAl6o5bVKNqFJqr6tGPYw==
   dependencies:
     "@types/resize-observer-browser" "^0.1.6"
@@ -5838,12 +5832,12 @@ react-resize-detector@^6.7.6:
 
 react-virtualized-auto-sizer@^1.0.5:
   version "1.0.15"
-  resolved "https://registry.npmjs.org/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.15.tgz"
+  resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.15.tgz#84558bcab61a625d13ec37876639bb09c5a3ec0b"
   integrity sha512-01yhkssgHShMiu5W8k+86kgl8lutpl+Uef9KP4wrozXnzZjxWIgj+cH8Qi064oQpKD8myn/JNMzp4tcZNQ3Avg==
 
 react-window@^1.8.6:
   version "1.8.9"
-  resolved "https://registry.npmjs.org/react-window/-/react-window-1.8.9.tgz"
+  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.9.tgz#24bc346be73d0468cdf91998aac94e32bc7fa6a8"
   integrity sha512-+Eqx/fj1Aa5WnhRfj9dJg4VYATGwIUP2ItwItiJ6zboKWA6EX3lYDAXfGF2hyNqplEprhbtjbipiADEcwQ823Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
