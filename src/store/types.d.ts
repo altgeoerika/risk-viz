@@ -1,4 +1,4 @@
-import { Action } from 'easy-peasy'
+import { Action, Computed } from 'easy-peasy'
 
 
 export interface RiskFactors {
@@ -18,14 +18,23 @@ export interface RiskDataObject {
   Lat: number
   Lon: number
   Asset: string
-  'Business Category': string,
+  'Business Category': string
   Risk: number
   'Risk Factors': RiskFactors
+  Year: number
 }
 
 export type RiskData = RiskDataObject[]
 
+export interface RiskFilters {
+  [key: string]: string | number
+}
+
 export interface RiskDataModel {
   data: RiskData
-  update: Action<this, any>
+  yearFilter: number
+  yearList: Computed<RiskDataModel, number[]>
+  flatData: Computed<RiskDataModel, (RiskDataObject & RiskFactors)[]>
+  filteredMapData: Computed<RiskDataModel, RiskData>
+  update: Action<RiskDataModel, Partial<RiskDataModel>>
 }

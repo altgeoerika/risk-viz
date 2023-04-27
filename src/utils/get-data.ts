@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { S3 } from '@aws-sdk/client-s3'
 import csv from 'csvtojson'
 
-import { RiskDataObject } from './types'
+import { RiskData } from '../store/types'
 
 
 const s3 = new S3({
@@ -26,9 +26,15 @@ export const getRiskData = cache(async () => {
     const getObjectResponse: {Body?: any} = await s3.getObject(getParams)
     const fileBodyString: string = await getObjectResponse.Body?.transformToString() || ''
 
-    const data: RiskDataObject[] = await csv({
+    const data: RiskData = await csv({
+      noheader: false,
+      headers: ['Asset Name', 'lat', 'lon', 'Business Category', 'Risk Rating', 'Risk Factors', 'Year'],
       colParser: {
         ['Risk Factors']: (item: string) => JSON.parse(item),
+        'Risk Rating': 'number',
+        lat: 'number',
+        lon: 'number',
+        Year: 'number',
       },
     }).fromString(fileBodyString) || []
 
