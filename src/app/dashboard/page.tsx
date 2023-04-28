@@ -4,6 +4,14 @@ import dynamic from 'next/dynamic'
 import styles from './dashboard.module.scss'
 
 
+const RiskMap = dynamic(
+  () => import('./risk-map'),
+  {
+    ssr: false,
+    loading: () => <>Loading...</>,
+  },
+)
+
 const RiskChart = dynamic(
   () => import('./risk-chart'),
   {
@@ -17,8 +25,7 @@ const Dashboard = () => {
     <div className={styles.gridContainer}>
       Test
       <div className={styles.gridMap}>
-        {/* <RiskMap/> */}
-        <RiskChart/>
+        <RiskMap/>
       </div>
       <div className={styles.gridChart}>
         <RiskChart/>
