@@ -1,4 +1,4 @@
-declare module 'react-maps'
+declare module '@geoerika/react-maps'
 declare module 'react-plotly.js'
 declare module 'plotly.js-basic-dist-min'
 declare module 'react-plotly.js/factory'

@@ -12,6 +12,7 @@
     "@aws-sdk/client-s3": "^3.317.0",
     "@aws-sdk/signature-v4-crt": "^3.310.0",
     "@eqworks/lumen-labs": "0.1.0-alpha.80",
+    "@geoerika/react-maps": "geoerika/react-maps#scatterplot",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@types/node": "18.15.13",

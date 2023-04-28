@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 // @ts-ignore
-import { QLReportMap } from 'react-maps'
+import { QLReportMap } from '@geoerika/react-maps'
 
 
 import DropdownSelect from '../../common-components/dropdown-select'
@@ -15,8 +15,6 @@ const RiskMap = () => {
   const data = useStoreState((state) => state.data)
   const filteredMapData = useStoreState((state) => state.filteredMapData)
   const yearList = useStoreState((state) => state.yearList)
-
-  console.log('filteredMapData: ', filteredMapData)
 
   useEffect(() => {
     if (!data.length) {
