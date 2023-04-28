@@ -1,16 +1,25 @@
 // 'use client'
 // import RiskMap from './risk-map'
-import RiskChart from './risk-chart'
+import dynamic from 'next/dynamic'
 import styles from './dashboard.module.scss'
 
+
+const RiskChart = dynamic(
+  () => import('./risk-chart'),
+  {
+    ssr: false,
+    loading: () => <>Loading...</>,
+  },
+)
 
 const Dashboard = () => {
   return (
     <div className={styles.gridContainer}>
       Test
-      {/* <div className={styles.gridMap}>
-        <RiskMap/>
-      </div> */}
+      <div className={styles.gridMap}>
+        {/* <RiskMap/> */}
+        <RiskChart/>
+      </div>
       <div className={styles.gridChart}>
         <RiskChart/>
       </div>
