@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 // @ts-ignore
-import { QLReportMap } from '@eqworks/react-maps'
+import { QLReportMap } from 'react-maps'
 
 
 import DropdownSelect from '../../common-components/dropdown-select'
