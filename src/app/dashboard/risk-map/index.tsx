@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-// @ts-ignore
+
 import { QLReportMap } from '@geoerika/react-maps'
 
 
