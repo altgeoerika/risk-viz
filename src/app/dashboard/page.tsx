@@ -1,5 +1,6 @@
-// 'use client'
+'use client'
 import dynamic from 'next/dynamic'
+
 import styles from './dashboard.module.scss'
 
 
@@ -19,18 +20,16 @@ const RiskChart = dynamic(
   },
 )
 
-const Dashboard = () => {
-  return (
-    <div className={styles.gridContainer}>
-      <div className={styles.gridMap}>
-        <RiskMap/>
-      </div>
-      <div className={styles.gridChart}>
-        <RiskChart/>
-      </div>
-      <div className={styles.gridTable}>Table</div>
+const Dashboard = () => (
+  <div className={styles.gridContainer}>
+    <div className={styles.gridMap}>
+      <RiskMap/>
     </div>
-  )
-}
+    <div className={styles.gridChart}>
+      <RiskChart/>
+    </div>
+    <div className={styles.gridTable}>Table</div>
+  </div>
+)
 
 export default Dashboard
