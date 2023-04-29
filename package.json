@@ -20,6 +20,7 @@
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
     "csvtojson": "^2.0.10",
+    "danfojs": "^1.1.2",
     "easy-peasy": "^6.0.0",
     "goober": "^2.1.13",
     "next": "13.3.1",

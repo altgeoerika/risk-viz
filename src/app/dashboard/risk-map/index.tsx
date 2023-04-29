@@ -1,34 +1,42 @@
 'use client'
-import { useEffect } from 'react'
-
+import { useState, useEffect } from 'react'
 import { QLReportMap } from '@geoerika/react-maps'
 
-
 import DropdownSelect from '../../common-components/dropdown-select'
-import { getRiskData } from '../../../utils/get-data'
 import { useStoreState, useStoreActions } from '../../../store'
+import { useData } from '../../../hooks'
+import { YEAR } from '../../../constants'
 import styles from './map.module.scss'
 
 
 const RiskMap = () => {
   const update = useStoreActions((action) => action.update)
-  const data = useStoreState((state) => state.data)
   const filteredMapData = useStoreState((state) => state.filteredMapData)
+  const yearFilter = useStoreState((state) => state.yearFilter)
   const yearList = useStoreState((state) => state.yearList)
+  // const selMapLocation = useStoreState((state) => state.selMapLocation)
+
+  const [selYear, setSelYear] = useState(yearFilter)
 
   useEffect(() => {
-    if (!data.length) {
-      getRiskData().then(data => update({ data }))
+    if (selYear !== yearFilter) {
+      setSelYear(yearFilter)
     }
-  }, [data.length, update] )
+  }, [selYear,yearFilter, setSelYear])
+
+  useData()
 
   return (
     <>
       {filteredMapData?.length > 0  &&
         <div>
-          <div className='absolute z-100 mt-3'>
-            <DropdownSelect data={yearList} onSelect={(val: number) => {
-              update({ yearFilter: val })}}/>
+          <div className='absolute z-100'>
+            <DropdownSelect
+              data={yearList}
+              valKey={selYear}
+              label={YEAR}
+              onSelect={(val: number) => {update({ yearFilter: val })}}
+            />
           </div>
           <div className={styles['map-container']}>
             <QLReportMap
@@ -37,6 +45,7 @@ const RiskMap = () => {
               fillBasedOn='Risk Rating'
               fillColors={['#09d65b', '#EFEE07', '#f00707']}
               getRadius={5}
+              onClick={(obj: any) => update({ selMapLocation: obj })}
               showLegend={true}
               opacity={.5}
               tooltipKeys={{
