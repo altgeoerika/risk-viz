@@ -7,11 +7,11 @@ import { LAT_LON  } from '../constants'
 export interface RiskFactors {
   Drought?: number
   Earthquake?: number
-  'Extreme Cold'?: number
-  'Extreme Heat'?: number
+  ['Extreme Cold']?: number
+  ['Extreme Heat']?: number
   Flooding?: number
   Hurricane?: number
-  'Sea level rise'?: number
+  ['Sea level rise']?: number
   Tornado?: number
   Volcano?: number
   Wildfires?: number
@@ -21,9 +21,9 @@ export interface RiskDataObject {
   Lat: number
   Lon: number
   Asset: string
-  'Business Category': string
-  Risk: number
-  'Risk Factors': RiskFactors
+  ['Business Category']: string
+  ['Risk Rating']: number
+  ['Risk Factors']: RiskFactors
   Year: number
   [LAT_LON]?: string
 }
@@ -40,6 +40,7 @@ export interface RiskDataModel {
   chartAggKey: string
   chartAggVal: string
   yearFilter: number
+  useMapLocation: boolean
   dataKeyTypes: Computed<RiskDataModel, object>
   yearList: Computed<RiskDataModel, number[]>
   dataAggKeys: Computed<RiskDataModel, string[]>

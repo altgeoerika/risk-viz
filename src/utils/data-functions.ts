@@ -76,7 +76,7 @@ export const groupChartData = (
     .filter(col => (dataKeyTypes[col] !== 'number' && col !== chartAggKey) || ['lat', 'lon'].includes(col))
   const filteredData = filterData({ data, filters: { [chartAggKey]: chartAggVal } })
   const df: any = new dfd.DataFrame(filteredData)
-  df?.sortValues(YEAR, { inplace: true })
   df?.drop({ columns: colsToDrop, inplace: true })
+  df?.sortValues(YEAR, { inplace: true })
   return df?.groupby([chartAggKey, YEAR])
 }

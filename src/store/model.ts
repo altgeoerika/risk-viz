@@ -16,9 +16,10 @@ import { YEAR } from '../constants'
 const model: RiskDataModel = {
   data: [],
   selMapLocation: null,
-  chartAggKey: 'Business Category',
-  chartAggVal: 'Technology',
-  yearFilter: 2030,
+  chartAggKey: '',
+  chartAggVal: '',
+  yearFilter: null,
+  useMapLocation: false,
   dataKeyTypes: computed(
     [
       (state) => state.data,
