@@ -1,8 +1,12 @@
 'use client'
 import React, { useMemo, useState, useEffect } from 'react'
+
 import dynamic from 'next/dynamic'
 import Plotly from 'plotly.js-basic-dist-min'
 import createPlotlyComponent from 'react-plotly.js/factory'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 
 import { useData } from '../../../hooks'
 import { formatColName } from '../../../utils/string-functions'
@@ -86,7 +90,7 @@ const RiskChart = () => {
             mode: 'lines+markers',
             marker: { color: colors[i] },
             name: fomattedCol,
-            hovertemplate: '<b>Year</b>: %{x}' + `<br><b>${fomattedCol}</b>: %{y}<br>` + '<extra></extra>',
+            hovertemplate: '<b>Year</b>: %{x}' + `<br><b>${fomattedCol}</b>: %{y}<br>` + `<b>${chartAggKey}</b>: ${chartAggVal}` + '<extra></extra>',
             hoverinfo:'x+y',
           }),
         ]
@@ -94,11 +98,11 @@ const RiskChart = () => {
       return acc
     }, [])
 
-  }, [chartData, chartAggKey, yearList])
+  }, [chartData, chartAggKey, chartAggVal, yearList])
 
-  return chartData && chartAggKey &&(
-    <>
-      <div className='absolute z-100 flex content-center gap-1'>
+  return chartData && chartAggKey && (
+    <Card sx={{ backgroundColor: 'black' }}>
+      <CardActions sx={{ backgroundColor: 'white', position: 'sticky', zIndex: 100 , display: 'flex', justifyContent: 'justify-between', alignItems: 'center', width: '100%' }}>
         <DropdownSelect
           data={dataAggKeys}
           valKey={chartAggKey}
@@ -109,6 +113,7 @@ const RiskChart = () => {
           }}
           label='Group Key'
           open={open1}
+          classes={{ menu: 'min-w-140' }}
         />
         <DropdownSelect
           data={[...aggKeyValues]}
@@ -121,53 +126,61 @@ const RiskChart = () => {
           }}
           label='Group Value'
           open={open2}
+          classes={{ menu: 'min-w-200' }}
         />
         <Switch
           label='Use Location on Map'
           onChange={() => update({ useMapLocation: !useMapLocation })}
           disabled={false}
-          // onHover={() => {}}
+          onHover={() => {}}
         />
-      </div>
-      <div>
-        <Plot
-          data={traces}
-          hoverInfo='x+text+name'
-          layout={{
-            width: '20wv',
-            height: '20hv',
-            title: '',
-            showlegend: true,
-            xaxis: {
-              title: {
-                text: 'Year',
-                font: {
-                  // family: 'Courier New, monospace',
-                  // size: 18,
-                  // color: '#7f7f7f',
+      </CardActions>
+      <CardContent>
+        <div style={{ width: '100%', height: '40vh' }}>
+          <Plot
+            data={traces}
+            hoverInfo='x+text+name'
+            layout={{
+              autosize: true,
+              margin: {
+                l: 100,
+                r: 50,
+                b: 100,
+                t: 50,
+                pad: 4,
+              },
+              title: '',
+              showlegend: true,
+              xaxis: {
+                title: {
+                  text: 'Year',
+                  font: {
+                    // family: 'Courier New, monospace',
+                    // size: 18,
+                    // color: '#7f7f7f',
+                  },
                 },
               },
-            },
-            yaxis: {
-              title: {
-                text: 'Risk values',
-                font: {
-                  // family: 'Courier New, monospace',
-                  // size: 18,
-                  // color: '#7f7f7f'
+              yaxis: {
+                title: {
+                  text: 'Risk values',
+                  font: {
+                    // family: 'Courier New, monospace',
+                    // size: 18,
+                    // color: '#7f7f7f'
+                  },
                 },
               },
-            },
-          }}
-          useResizeHandler
-          className='w-full h-full'
-          config={{
-            displayModeBar: false,
-            responsive: true,
-          }}
-        />
-      </div>
-    </>
+            }}
+            config={{
+              displayModeBar: false,
+              responsive: true,
+            }}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 

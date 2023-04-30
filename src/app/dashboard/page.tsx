@@ -1,7 +1,9 @@
 'use client'
 import dynamic from 'next/dynamic'
 
-import styles from './dashboard.module.scss'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 
 
 const RiskMap = dynamic(
@@ -20,16 +22,32 @@ const RiskChart = dynamic(
   },
 )
 
-const Dashboard = () => (
-  <div className={styles.gridContainer}>
-    <div className={styles.gridMap}>
-      <RiskMap/>
-    </div>
-    <div className={styles.gridChart}>
-      <RiskChart/>
-    </div>
-    <div className={styles.gridTable}>Table</div>
-  </div>
+const RiskTable = dynamic(
+  () => import('./table'),
+  {
+    ssr: false,
+    loading: () => <>Loading...</>,
+  },
 )
+
+const Dashboard = () => {
+  return (
+    <Box sx={{ bgcolor: '#fcb900', height: 'fit-content', padding: '1rem' }}>
+      <Container maxWidth={false}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <RiskMap/>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <RiskChart/>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <RiskTable/>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  )
+}
 
 export default Dashboard

@@ -15,7 +15,7 @@ export const isObject = (v: any): boolean => v !== null && !Array.isArray(v) && 
 export const getDataKeyValues = ({ data, key }: { data: RiskData, key: string }): any[] =>
   Array.from(new Set(data?.map(d => d[key])))
 
-// gets all the keys from a nexted object in a data column, where the objects don't include values for all keys
+// gets all the keys from a nested object in a data column, where the objects don't include values for all keys
 export const getObjKeysFromNestedCol = ({ data, key }: { data: RiskData, key: string }): string[] =>
   data?.reduce<string[]>((acc, el) => {
     const elKeys = Object.keys(el[key])

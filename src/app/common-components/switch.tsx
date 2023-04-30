@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 
-const Switch = ({ onChange, disabled, label }) => {
+const Switch = ({ onChange, disabled, label, onHover }) => {
   const [checked, setChecked] = useState<boolean>(false)
   return (
     <div
@@ -20,10 +20,10 @@ const Switch = ({ onChange, disabled, label }) => {
           onChange()
         }}
         disabled={disabled}
+        onHover={() => onHover()}
       />
       <label
-        className="inline-block pl-[0.15rem] mt-[0.2rem] hover:cursor-pointer text-sm font-normal text-gray-900 "
-        // for="flexSwitchCheckDefault"
+        className="inline-block pl-[0.15rem] mt-[0.2rem] mr-2 hover:cursor-pointer text-sm font-normal text-gray-900 "
       >
         {label}
       </label>

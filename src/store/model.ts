@@ -22,17 +22,33 @@ const model: RiskDataModel = {
   useMapLocation: false,
   dataKeyTypes: computed(
     [
-      (state) => state.data,
+      (state) => state.flatData,
     ],
     (
-      data,
+      flatData,
     ) => {
       let keyTypes = {}
-      if (data?.length) {
-        Object.keys(data[0]).forEach(key => keyTypes[key] = typeof data[0][key])
+      if (flatData?.length) {
+        Object.keys(flatData[0]).forEach(key => keyTypes[key] = typeof flatData[0][key])
       }
       return keyTypes
     },
+  ),
+  numericKeyList: computed(
+    [
+      (state) => state.dataKeyTypes,
+    ],
+    (
+      dataKeyTypes,
+    ) => Object.keys(dataKeyTypes).filter(key => dataKeyTypes[key] === 'number') || [],
+  ),
+  riskRatingKeys: computed(
+    [
+      (state) => state.numericKeyList,
+    ],
+    (
+      numericKeyList,
+    ) => numericKeyList?.filter(key => !['lat', 'lon'].includes(key)) || [],
   ),
   yearList: computed(
     [

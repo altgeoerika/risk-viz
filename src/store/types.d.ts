@@ -42,6 +42,8 @@ export interface RiskDataModel {
   yearFilter: number
   useMapLocation: boolean
   dataKeyTypes: Computed<RiskDataModel, object>
+  numericKeyList: Computed<RiskDataModel, string[]>
+  riskRatingKeys: Computed<RiskDataModel, string[]>
   yearList: Computed<RiskDataModel, number[]>
   dataAggKeys: Computed<RiskDataModel, string[]>
   aggKeyValues: Computed<RiskDataModel, string[]>
