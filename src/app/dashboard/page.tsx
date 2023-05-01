@@ -4,13 +4,21 @@ import dynamic from 'next/dynamic'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
 
 
 const RiskMap = dynamic(
   () => import('./risk-map'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='47vw'
+        height='45vh'
+      />
+    ),
   },
 )
 
@@ -18,7 +26,14 @@ const RiskChart = dynamic(
   () => import('./risk-chart'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='47vw'
+        height='45vh'
+      />
+    ),
   },
 )
 
@@ -26,13 +41,20 @@ const RiskTable = dynamic(
   () => import('./table'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='95vw'
+        height='40vh'
+      />
+    ),
   },
 )
 
 const Dashboard = () => {
   return (
-    <Box sx={{ bgcolor: '#fcb900', height: 'fit-content', padding: '1rem' }}>
+    <Box sx={{ bgcolor: '#FFCB70', height: 'fit-content', padding: '1rem' }}>
       <Container maxWidth={false}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

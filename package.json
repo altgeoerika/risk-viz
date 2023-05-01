@@ -27,6 +27,7 @@
     "csvtojson": "^2.0.10",
     "danfojs": "^1.1.2",
     "easy-peasy": "^6.0.0",
+    "export-to-csv": "^0.2.1",
     "goober": "^2.1.13",
     "material-react-table": "^1.11.0",
     "next": "13.3.1",

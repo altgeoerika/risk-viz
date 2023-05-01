@@ -7,18 +7,30 @@ import createPlotlyComponent from 'react-plotly.js/factory'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import InfoIcon from '@mui/icons-material/Info'
+import Skeleton from '@mui/material/Skeleton'
 
 import { useData } from '../../../hooks'
 import { formatColName } from '../../../utils/string-functions'
 import { useStoreState, useStoreActions } from '../../../store'
-import { YEAR, colors } from '../../../constants'
+import { YEAR, chartColors } from '../../../constants'
+import Box from '@mui/material/Box'
 
 
 const DropdownSelect = dynamic(
   () => import('../../common-components/dropdown-select'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='13vw'
+        height='4vh'
+      />
+    ),
   },
 )
 
@@ -26,7 +38,14 @@ const Switch = dynamic(
   () => import('../../common-components/switch'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='13vw'
+        height='4vh'
+      />
+    ),
   },
 )
 
@@ -88,7 +107,7 @@ const RiskChart = () => {
             y: colValues,
             type: 'scatter',
             mode: 'lines+markers',
-            marker: { color: colors[i] },
+            marker: { color: chartColors[i] },
             name: fomattedCol,
             hovertemplate: '<b>Year</b>: %{x}' + `<br><b>${fomattedCol}</b>: %{y}<br>` + `<b>${chartAggKey}</b>: ${chartAggVal}` + '<extra></extra>',
             hoverinfo:'x+y',
@@ -100,87 +119,108 @@ const RiskChart = () => {
 
   }, [chartData, chartAggKey, chartAggVal, yearList])
 
-  return chartData && chartAggKey && (
-    <Card sx={{ backgroundColor: 'black' }}>
-      <CardActions sx={{ backgroundColor: 'white', position: 'sticky', zIndex: 100 , display: 'flex', justifyContent: 'justify-between', alignItems: 'center', width: '100%' }}>
-        <DropdownSelect
-          data={dataAggKeys}
-          valKey={chartAggKey}
-          onClick={() => setOpen1(!open1)}
-          onSelect={(val: string) => {
-            setOpen1(!open1)
-            update({ chartAggKey: val })
-          }}
-          label='Group Key'
-          open={open1}
-          classes={{ menu: 'min-w-140' }}
-        />
-        <DropdownSelect
-          data={[...aggKeyValues]}
-          valKey={selectedAggVal}
-          onClick={() => setOpen2(!open2)}
-          onSelect={(val: string) => {
-            setOpen2(!open2)
-            setSelectedAggVal(val)
-            update({ chartAggVal: val })
-          }}
-          label='Group Value'
-          open={open2}
-          classes={{ menu: 'min-w-200' }}
-        />
-        <Switch
-          label='Use Location on Map'
-          onChange={() => update({ useMapLocation: !useMapLocation })}
-          disabled={false}
-          onHover={() => {}}
-        />
-      </CardActions>
-      <CardContent>
-        <div style={{ width: '100%', height: '40vh' }}>
-          <Plot
-            data={traces}
-            hoverInfo='x+text+name'
-            layout={{
-              autosize: true,
-              margin: {
-                l: 100,
-                r: 50,
-                b: 100,
-                t: 50,
-                pad: 4,
-              },
-              title: '',
-              showlegend: true,
-              xaxis: {
-                title: {
-                  text: 'Year',
-                  font: {
-                    // family: 'Courier New, monospace',
-                    // size: 18,
-                    // color: '#7f7f7f',
+  return (
+    <>
+      {chartData && chartAggKey && (
+        <Card sx={{ backgroundColor: 'black' }}>
+          <CardActions sx={{
+            backgroundColor: 'white',
+            position: 'sticky',
+            zIndex: 100 , display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'justify-between',
+            alignContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+            <DropdownSelect
+              data={dataAggKeys}
+              valKey={chartAggKey}
+              onClick={() => setOpen1(!open1)}
+              onSelect={(val: string) => {
+                setOpen1(!open1)
+                update({ chartAggKey: val })
+              }}
+              label='Group Key'
+              open={open1}
+              classes={{ menu: 'min-w-140' }}
+            />
+            <DropdownSelect
+              data={[...aggKeyValues]}
+              valKey={selectedAggVal}
+              onClick={() => setOpen2(!open2)}
+              onSelect={(val: string) => {
+                setOpen2(!open2)
+                setSelectedAggVal(val)
+                update({ chartAggVal: val })
+              }}
+              label='Group Value'
+              open={open2}
+              classes={{ menu: 'min-w-200' }}
+            />
+            <div className='flex flex-row flex-wrap content-center gap-1 justify-end items-center mr-2'>
+              <Switch
+                label='Use Location on Map'
+                onChange={() => update({ useMapLocation: !useMapLocation })}
+                disabled={false}
+              />
+              <Box sx={{ paddingTop: '1.1rem' }}>
+                <Tooltip title='Click on a location on the map' arrow>
+                  <IconButton aria-label='info' size='small'>
+                    <InfoIcon fontSize='small'/>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </div>
+          </CardActions>
+          <CardContent>
+            <div style={{ width: '100%', height: '40vh' }}>
+              <Plot
+                data={traces}
+                hoverInfo='x+text+name'
+                layout={{
+                  autosize: true,
+                  margin: {
+                    l: 100,
+                    r: 50,
+                    b: 100,
+                    t: 50,
+                    pad: 4,
                   },
-                },
-              },
-              yaxis: {
-                title: {
-                  text: 'Risk values',
-                  font: {
-                    // family: 'Courier New, monospace',
-                    // size: 18,
-                    // color: '#7f7f7f'
+                  title: '',
+                  showlegend: true,
+                  xaxis: {
+                    title: {
+                      text: 'Year',
+                      font: {
+                        // family: 'Courier New, monospace',
+                        // size: 18,
+                        // color: '#7f7f7f',
+                      },
+                    },
                   },
-                },
-              },
-            }}
-            config={{
-              displayModeBar: false,
-              responsive: true,
-            }}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </div>
-      </CardContent>
-    </Card>
+                  yaxis: {
+                    title: {
+                      text: 'Risk values',
+                      font: {
+                        // family: 'Courier New, monospace',
+                        // size: 18,
+                        // color: '#7f7f7f'
+                      },
+                    },
+                  },
+                }}
+                config={{
+                  displayModeBar: false,
+                  responsive: true,
+                }}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </>
   )
 }
 
