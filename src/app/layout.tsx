@@ -1,11 +1,15 @@
 import React from 'react'
 
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Oxygen } from 'next/font/google'
+import Navbar from '../app/common-components/navbar'
 import Providers from './provider/provider'
 
 
-const inter = Inter({ subsets: ['latin'] })
+const oxygen = Oxygen({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,9 +22,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang='en'>
+      <body className={oxygen.className}>
         <Providers>
+          <Navbar />
           {children}
         </Providers>
       </body>

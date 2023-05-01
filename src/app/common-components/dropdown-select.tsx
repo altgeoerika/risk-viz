@@ -21,12 +21,12 @@ const DropdownSelect = ({ data, onSelect, onClick, open, valKey, label, classes=
       <Menu as='menu' className={`${classes?.menu ||''} relative block text-left w-max`}>
         <div>
           <Menu.Button
-            className='inline-flex w-full justify-center rounded bg-gray-500 p-1 text-xs font-medium text-white hover:bg-opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-90'
+            className='inline-flex w-full justify-center rounded bg-gray-500 p-2 text-sm font-medium text-white hover:bg-opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-90'
             onClick={(onClick)}
           >
             {selectedValue}
             <ChevronDownIcon
-              className='ml-2 -mr-1 h-4 w-5 text-violet-200 hover:text-violet-100'
+              className='ml-2 -mr-1 h-4 w-5'
               aria-hidden='true'
             />
           </Menu.Button>
@@ -43,7 +43,7 @@ const DropdownSelect = ({ data, onSelect, onClick, open, valKey, label, classes=
                     <button
                       className={`${
                         active ? 'bg-gray-500 text-white' : selected === i ? 'bg-gray-300' : 'text-gray-900'
-                      } group flex w-full items-center text-left rounded p-1 text-xs`}
+                      } group flex w-full items-center text-left rounded p-1 text-sm`}
                       onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()

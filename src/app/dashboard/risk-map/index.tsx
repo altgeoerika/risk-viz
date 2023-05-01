@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
+import Skeleton from '@mui/material/Skeleton'
 import { QLReportMap } from '@geoerika/react-maps'
 
 import { useData } from '../../../hooks'
@@ -16,7 +17,14 @@ const DropdownSelect = dynamic(
   () => import('../../common-components/dropdown-select'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='13vw'
+        height='5vh'
+      />
+    ),
   },
 )
 
@@ -24,7 +32,14 @@ const Switch = dynamic(
   () => import('../../common-components/switch'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='13vw'
+        height='4vh'
+      />
+    ),
   },
 )
 
@@ -93,7 +108,16 @@ const RiskMap = () => {
     <>
       {filteredMapData?.length > 0 && yearFilter && riskRatingKeys.length > 0 &&
         <Card sx={{ backgroundColor: 'black' }}>
-          <CardActions sx={{ backgroundColor: 'white', position: 'sticky', zIndex: 100 }}>
+          <CardActions sx={{
+            backgroundColor: 'white',
+            position: 'sticky',
+            zIndex: 100 , display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'justify-between',
+            alignContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}>
             <DropdownSelect
               data={yearList}
               valKey={selYear}
@@ -120,7 +144,6 @@ const RiskMap = () => {
               label='Tooltip - all Data'
               onChange={() => setUseAllDataTooltip(!useAllDataTooltip)}
               disabled={false}
-              onHover={() => {}}
             />
           </CardActions>
           <CardContent sx={{ zIndex: -100 }}>
@@ -130,7 +153,7 @@ const RiskMap = () => {
                 showTooltip={true}
                 fillBasedOn={selRisk}
                 fillColors={['#09d65b', '#EFEE07', '#f00707']}
-                getRadius={5}
+                getRadius={6}
                 onClick={(obj: any) => update({ selMapLocation: obj })}
                 showLegend={true}
                 opacity={.5}
