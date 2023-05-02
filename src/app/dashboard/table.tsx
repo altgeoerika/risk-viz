@@ -20,7 +20,14 @@ const MaterialReactTable = dynamic(
   () => import('material-react-table'),
   {
     ssr: false,
-    loading: () => <>Loading...</>,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='94vw'
+        height='40vh'
+      />
+    ),
   },
 )
 
@@ -81,7 +88,7 @@ const RiskTable = () => {
     <>
       {filteredMapData && columns.length > 0 &&
         <Card>
-          <CardContent sx={{ backgroundColor: 'black' }}>
+          <CardContent>
             <MaterialReactTable
               fontFamily='Oxygen'
               columns={columns}
