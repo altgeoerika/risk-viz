@@ -25,9 +25,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={oxygen.className}>
         <Providers>
-          <Navbar />
           {children}
         </Providers>
+        <Navbar />
       </body>
     </html>
   )

@@ -18,6 +18,7 @@ export interface RiskFactors {
 }
 
 export interface RiskDataObject {
+  original: any
   Lat: number
   Lon: number
   Asset: string

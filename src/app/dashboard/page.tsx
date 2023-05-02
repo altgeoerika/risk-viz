@@ -54,7 +54,7 @@ const RiskTable = dynamic(
 
 const Dashboard = () => {
   return (
-    <Box sx={{ bgcolor: '#FFCB70', height: 'fit-content', padding: '1rem' }}>
+    <Box sx={{ bgcolor: '#FFCB70', height: 'fit-content', padding: '1rem', marginTop: '5rem'  }}>
       <Container maxWidth={false}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

@@ -160,8 +160,9 @@ const RiskChart = () => {
         <Card>
           <CardActions sx={{
             backgroundColor: 'white',
+            boxShadow: '0 0.125rem 0.5rem 0 rgba(12, 12, 13, 0.15)',
             position: 'sticky',
-            zIndex: 100 , display: 'flex',
+            display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'justify-between',
             alignContent: 'center',
