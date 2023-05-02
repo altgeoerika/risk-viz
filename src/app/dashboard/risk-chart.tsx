@@ -12,15 +12,15 @@ import IconButton from '@mui/material/IconButton'
 import InfoIcon from '@mui/icons-material/Info'
 import Skeleton from '@mui/material/Skeleton'
 
-import { useData } from '../../../hooks'
-import { formatColName } from '../../../utils/string-functions'
-import { useStoreState, useStoreActions } from '../../../store'
-import { YEAR, chartColors } from '../../../constants'
+import { useData } from '../../hooks'
+import { formatColName } from '../../utils/string-functions'
+import { useStoreState, useStoreActions } from '../../store'
+import { YEAR, chartColors } from '../../constants'
 import Box from '@mui/material/Box'
 
 
 const DropdownSelect = dynamic(
-  () => import('../../common-components/dropdown-select'),
+  () => import('../common-components/dropdown-select'),
   {
     ssr: false,
     loading: () => (
@@ -35,7 +35,7 @@ const DropdownSelect = dynamic(
 )
 
 const Switch = dynamic(
-  () => import('../../common-components/switch'),
+  () => import('../common-components/switch'),
   {
     ssr: false,
     loading: () => (
@@ -50,6 +50,39 @@ const Switch = dynamic(
 )
 
 const Plot = createPlotlyComponent(Plotly)
+
+const layout = {
+  autosize: true,
+  margin: {
+    l: 100,
+    r: 50,
+    b: 100,
+    t: 50,
+    pad: 4,
+  },
+  title: '',
+  showlegend: true,
+  xaxis: {
+    title: {
+      text: 'Year',
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'Risk type (mean)',
+    },
+  },
+  yaxis2: {
+    title: 'Risk Rating (mean)',
+    overlaying: 'y',
+    side: 'right',
+  },
+  legend: {
+    orientation: 'v',
+    x: 1.2,
+    xanchor: 'left',
+  },
+}
 
 const RiskChart = () => {
   const update = useStoreActions((action) => action.update)
@@ -97,14 +130,16 @@ const RiskChart = () => {
   const traces = useMemo(() => {
     const { columns, values } = chartData || {}
     return columns.reduce((acc, col, i) => {
-      if (![chartAggKey, YEAR].includes(col)) {
-        const fomattedCol: string = formatColName(col)
-        const colValues = values.map(list => list[i])
+      const fomattedCol: string = formatColName(col)
+      const colValues = values.map(list => list[i])
+      if (![chartAggKey, YEAR, 'Risk Rating (mean)'].includes(col)) {
         return [
           ...acc,
           ({
             x: yearList,
             y: colValues,
+            ...(col === 'Risk Rating_mean' ? { yaxis: 'y2' } : {}),
+            ...(col !== 'Risk Rating_mean' ? { visible: 'legendonly' } : {}),
             type: 'scatter',
             mode: 'lines+markers',
             marker: { color: chartColors[i] },
@@ -122,7 +157,7 @@ const RiskChart = () => {
   return (
     <>
       {chartData && chartAggKey && (
-        <Card sx={{ backgroundColor: 'black' }}>
+        <Card>
           <CardActions sx={{
             backgroundColor: 'white',
             position: 'sticky',
@@ -178,38 +213,7 @@ const RiskChart = () => {
               <Plot
                 data={traces}
                 hoverInfo='x+text+name'
-                layout={{
-                  autosize: true,
-                  margin: {
-                    l: 100,
-                    r: 50,
-                    b: 100,
-                    t: 50,
-                    pad: 4,
-                  },
-                  title: '',
-                  showlegend: true,
-                  xaxis: {
-                    title: {
-                      text: 'Year',
-                      font: {
-                        // family: 'Courier New, monospace',
-                        // size: 18,
-                        // color: '#7f7f7f',
-                      },
-                    },
-                  },
-                  yaxis: {
-                    title: {
-                      text: 'Risk values',
-                      font: {
-                        // family: 'Courier New, monospace',
-                        // size: 18,
-                        // color: '#7f7f7f'
-                      },
-                    },
-                  },
-                }}
+                layout={layout}
                 config={{
                   displayModeBar: false,
                   responsive: true,

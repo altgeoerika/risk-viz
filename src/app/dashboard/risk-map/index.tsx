@@ -107,7 +107,7 @@ const RiskMap = () => {
   return (
     <>
       {filteredMapData?.length > 0 && yearFilter && riskRatingKeys.length > 0 &&
-        <Card sx={{ backgroundColor: 'black' }}>
+        <Card>
           <CardActions sx={{
             backgroundColor: 'white',
             position: 'sticky',
