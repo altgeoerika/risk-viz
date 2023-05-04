@@ -10,6 +10,7 @@ import { QLReportMap } from '@geoerika/react-maps'
 import { useData } from '../../../hooks'
 import { useStoreState, useStoreActions } from '../../../store'
 import { YEAR, LAT_LON } from '../../../constants'
+import Button from '../../common-components/button'
 import styles from './map.module.scss'
 
 
@@ -51,13 +52,15 @@ const RiskMap = () => {
   const numericKeyList = useStoreState((state) => state.numericKeyList)
   const riskRatingKeys = useStoreState((state) => state.riskRatingKeys)
   const selMapLocation = useStoreState((state) => state.selMapLocation)
-  const useMapLocation = useStoreState((state) => state.useMapLocation)
+  const selChartLocation = useStoreState((state) => state.selChartLocation)
 
   const [selYear, setSelYear] = useState<number>(yearFilter)
   const [selRisk, setSelRisk] = useState<string>(riskRatingKeys[0])
   const [useAllDataTooltip, setUseAllDataTooltip] = useState<boolean>(false)
   const [open1, setOpen1] = useState<boolean>(false)
   const [open2, setOpen2] = useState<boolean>(false)
+  // prop to reset map view to data extent
+  const [resetMapView, setResetMapView] = useState<boolean>(false)
 
   const click = () => {
     if (open1) {
@@ -94,10 +97,10 @@ const RiskMap = () => {
   }, [selRisk, riskRatingKeys])
 
   useEffect(() => {
-    if (selMapLocation && useMapLocation) {
+    if (selMapLocation) {
       update({ chartAggKey: LAT_LON, chartAggVal: selMapLocation[LAT_LON] })
     }
-  }, [selMapLocation, useMapLocation, update])
+  }, [selMapLocation, update])
 
   const metricKeys = useMemo(() => useAllDataTooltip ?
     numericKeyList :
@@ -105,19 +108,17 @@ const RiskMap = () => {
   [useAllDataTooltip, selRisk, numericKeyList])
 
   return (
-    <>
+    <div className='w-full'>
       {filteredMapData?.length > 0 && yearFilter && riskRatingKeys.length > 0 &&
         <Card>
           <CardActions sx={{
             backgroundColor: 'white',
             boxShadow: '0 0.125rem 0.5rem 0 rgba(12, 12, 13, 0.15)',
             position: 'sticky',
-            display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'justify-between',
             alignContent: 'center',
             alignItems: 'center',
-            width: '100%',
+            zIndex: 1,
           }}>
             <DropdownSelect
               data={yearList}
@@ -130,22 +131,33 @@ const RiskMap = () => {
               }}
               open={open1}
             />
-            <DropdownSelect
-              data={riskRatingKeys}
-              valKey={selRisk}
-              label='Select Risk Type'
-              onClick={() => setOpen2(!open2)}
-              onSelect={(val: string) => {
-                setOpen2(!open2)
-                setSelRisk(val)
-              }}
-              open={open2}
-            />
-            <Switch
-              label='Tooltip - all Data'
-              onChange={() => setUseAllDataTooltip(!useAllDataTooltip)}
-              disabled={false}
-            />
+            <div className={styles['select-container']}>
+              <DropdownSelect
+                data={riskRatingKeys}
+                valKey={selRisk}
+                label='Select Risk Type'
+                onClick={() => setOpen2(!open2)}
+                onSelect={(val: string) => {
+                  setOpen2(!open2)
+                  setSelRisk(val)
+                }}
+                open={open2}
+              />
+            </div>
+            <div className='-z-10'>
+              <Button
+                onClick={() => setResetMapView(true)}
+              >
+                 Reset Map View
+              </Button>
+            </div>
+            <div className='-z-10 p-2'>
+              <Switch
+                label='Tooltip - all Data'
+                onChange={() => setUseAllDataTooltip(!useAllDataTooltip)}
+                disabled={false}
+              />
+            </div>
           </CardActions>
           <CardContent>
             <div className={styles['map-container']}>
@@ -155,7 +167,19 @@ const RiskMap = () => {
                 fillBasedOn={selRisk}
                 fillColors={['#09d65b', '#EFEE07', '#f00707']}
                 getRadius={6}
-                onClick={(obj: any) => update({ selMapLocation: obj })}
+                onClick={(obj: any) => {
+                  const { lon, lat } = obj || {}
+                  if (lon && lat) {
+                    update({
+                      chartAggKey: LAT_LON,
+                      chartAggVal: `${lat} / ${lon}`,
+                    })
+                  }
+                  update({ selMapLocation: obj })
+                }}
+                selectedPOI={selChartLocation}
+                resetMapView={resetMapView}
+                setResetMapView={setResetMapView}
                 showLegend={true}
                 opacity={.5}
                 tooltipKeys={{
@@ -173,13 +197,17 @@ const RiskMap = () => {
                   return el
                 }}
                 legendPosition='top-right'
+                controller={{
+                  scrollZoom: false,
+                  doubleClickZoom: true,
+                }}
                 mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
               />
             </div>
           </CardContent>
         </Card>
       }
-    </>
+    </div>
   )
 }
 

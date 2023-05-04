@@ -100,13 +100,20 @@ const RiskTable = () => {
               enableRowActions
               enableRowSelection
               muiTableHeadCellProps={{
-                //simple styling with the `sx` prop, works just like a style prop in this example
                 sx: {
                   fontWeight: 'bold',
                   fontSize: '14px',
+                  textTransform: 'capitalize',
                 },
               }}
-              initialState={{ showColumnFilters: true, density: 'compact', pagination: { pageIndex: 0, pageSize: 5 } }}
+              initialState={{
+                showColumnFilters: true,
+                density: 'compact',
+                pagination: {
+                  pageIndex: 0,
+                  pageSize: 5,
+                },
+              }}
               positionToolbarAlertBanner='bottom'
               muiTableHeadCellFilterTextFieldProps={{
                 sx: { width: '100%' },

@@ -21,7 +21,7 @@ export interface RiskDataObject {
   original: any
   Lat: number
   Lon: number
-  Asset: string
+  ['Asset Name']: string
   ['Business Category']: string
   ['Risk Rating']: number
   ['Risk Factors']: RiskFactors
@@ -37,11 +37,11 @@ export interface RiskFilters {
 
 export interface RiskDataModel {
   data: RiskData
-  selMapLocation: object
+  selMapLocation: { lon: number, lat: number }
   chartAggKey: string
   chartAggVal: string
   yearFilter: number
-  useMapLocation: boolean
+  selChartLocation: { lon: number, lat: number }
   dataKeyTypes: Computed<RiskDataModel, object>
   numericKeyList: Computed<RiskDataModel, string[]>
   riskRatingKeys: Computed<RiskDataModel, string[]>
