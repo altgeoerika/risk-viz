@@ -19,7 +19,7 @@ const model: RiskDataModel = {
   chartAggKey: '',
   chartAggVal: '',
   yearFilter: null,
-  useMapLocation: false,
+  selChartLocation: null,
   dataKeyTypes: computed(
     [
       (state) => state.flatData,
@@ -48,7 +48,7 @@ const model: RiskDataModel = {
     ],
     (
       numericKeyList,
-    ) => numericKeyList?.filter(key => !['lat', 'lon'].includes(key)) || [],
+    ) => numericKeyList?.filter(key => !['lat', 'lon', YEAR].includes(key)) || [],
   ),
   yearList: computed(
     [

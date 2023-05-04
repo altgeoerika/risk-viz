@@ -6,20 +6,21 @@ import Image from 'next/image'
 import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 import CloseIcon from '@mui/icons-material/Close'
 
-// "https://www.flaticon.com/free-icons/graph"
+// https://www.flaticon.com/free-icons/graph
 import logo from '../../assets/images/logo.png'
 
 
 const linkStyling = 'text-[#fcb900] uppercase font-bold hover:border-b cursor-pointer'
 
 const Navbar = () => {
-  const [navMenuOpen, setNavMenuOpen] = useState(false)
+  const [navMenuOpen, setNavMenuOpen] = useState<boolean>(false)
 
   const handleNav = () => {
     setNavMenuOpen(!navMenuOpen)
   }
+
   return (
-    <nav className='navbar fixed top-0 shadow-md bg-black w-full h-20'>
+    <nav className='navbar fixed top-0 shadow-md bg-black w-full h-20 z-10'>
       <div className='w-full h-full flex justify-between text-xl items-center px-10 2xl:px-16'>
         <div className='nav-header flex items-center gap-2 text-white'>
           <Link href='./'>

@@ -7,35 +7,16 @@ import createPlotlyComponent from 'react-plotly.js/factory'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import Tooltip from '@mui/material/Tooltip'
-import IconButton from '@mui/material/IconButton'
-import InfoIcon from '@mui/icons-material/Info'
 import Skeleton from '@mui/material/Skeleton'
 
 import { useData } from '../../hooks'
 import { formatColName } from '../../utils/string-functions'
 import { useStoreState, useStoreActions } from '../../store'
-import { YEAR, chartColors } from '../../constants'
-import Box from '@mui/material/Box'
+import { YEAR, LAT_LON, chartColors } from '../../constants'
 
 
 const DropdownSelect = dynamic(
   () => import('../common-components/dropdown-select'),
-  {
-    ssr: false,
-    loading: () => (
-      <Skeleton
-        animation='wave'
-        variant='rectangular'
-        width='13vw'
-        height='4vh'
-      />
-    ),
-  },
-)
-
-const Switch = dynamic(
-  () => import('../common-components/switch'),
   {
     ssr: false,
     loading: () => (
@@ -69,7 +50,7 @@ const layout = {
   },
   yaxis: {
     title: {
-      text: 'Risk type (mean)',
+      text: 'Risk Type Rating (mean)',
     },
   },
   yaxis2: {
@@ -92,7 +73,7 @@ const RiskChart = () => {
   const aggKeyValues = useStoreState((state) => state.aggKeyValues)
   const yearList = useStoreState((state) => state.yearList)
   const chartData = useStoreState((state) => state.chartData)
-  const useMapLocation = useStoreState((state) => state.useMapLocation)
+  const selMapLocation = useStoreState((state) => state.selMapLocation)
 
   const [selectedAggVal, setSelectedAggVal] = useState<string>(chartAggVal)
   const [open1, setOpen1] = useState<boolean>(false)
@@ -114,18 +95,37 @@ const RiskChart = () => {
 
   useData()
 
+  // set chartAggKey to the first option in the key list for aggregation
   useEffect(() => {
     if (!chartAggKey && dataAggKeys.length) {
       update({ chartAggKey: dataAggKeys[0] })
     }
   }, [chartAggKey, dataAggKeys, update])
 
+  // update local state with the selected value
+  useEffect(() => {
+    if (chartAggVal && aggKeyValues.includes(chartAggVal)) {
+      setSelectedAggVal(chartAggVal)
+    }
+  }, [chartAggVal, aggKeyValues])
+
+  // update aggregation value with the first value in the aggregation avlue list when changing the aggregation key
   useEffect(() => {
     if (!aggKeyValues.includes(selectedAggVal)) {
-      update({ chartAggVal: aggKeyValues[0] })
-      setSelectedAggVal(aggKeyValues[0])
+      if (!(chartAggKey === LAT_LON && selMapLocation)) {
+        update({ chartAggVal: aggKeyValues[0] })
+        setSelectedAggVal(aggKeyValues[0])
+      }
     }
-  }, [chartAggVal, aggKeyValues, selectedAggVal, update])
+  }, [chartAggKey, chartAggVal, aggKeyValues, selectedAggVal, update, selMapLocation])
+
+  // set selChartLocation to the first agg value in the list the first time we change chartAggKey to lon / lat
+  useEffect(() => {
+    if (chartAggKey === LAT_LON && chartAggVal && !selMapLocation) {
+      const [lat, lon] = chartAggVal.split(' / ')
+      update({ selChartLocation: { lat: Number(lat), lon: Number(lon) } })
+    }
+  }, [chartAggKey, chartAggVal, selMapLocation, update])
 
   const traces = useMemo(() => {
     const { columns, values } = chartData || {}
@@ -144,7 +144,10 @@ const RiskChart = () => {
             mode: 'lines+markers',
             marker: { color: chartColors[i] },
             name: fomattedCol,
-            hovertemplate: '<b>Year</b>: %{x}' + `<br><b>${fomattedCol}</b>: %{y}<br>` + `<b>${chartAggKey}</b>: ${chartAggVal}` + '<extra></extra>',
+            hovertemplate: '<b>Year</b>: %{x}' +
+              `<br><b>${fomattedCol}</b>: %{y}<br>` +
+              `<b>${chartAggKey}</b>: ${chartAggVal}` +
+              '<extra></extra>',
             hoverinfo:'x+y',
           }),
         ]
@@ -157,7 +160,7 @@ const RiskChart = () => {
   return (
     <>
       {chartData && chartAggKey && (
-        <Card>
+        <Card sx={{ width: '100%' }}>
           <CardActions sx={{
             backgroundColor: 'white',
             boxShadow: '0 0.125rem 0.5rem 0 rgba(12, 12, 13, 0.15)',
@@ -167,46 +170,40 @@ const RiskChart = () => {
             justifyContent: 'justify-between',
             alignContent: 'center',
             alignItems: 'center',
-            width: '100%',
+            zIndex: 1,
           }}>
-            <DropdownSelect
-              data={dataAggKeys}
-              valKey={chartAggKey}
-              onClick={() => setOpen1(!open1)}
-              onSelect={(val: string) => {
-                setOpen1(!open1)
-                update({ chartAggKey: val })
-              }}
-              label='Group Key'
-              open={open1}
-              classes={{ menu: 'min-w-140' }}
-            />
-            <DropdownSelect
-              data={[...aggKeyValues]}
-              valKey={selectedAggVal}
-              onClick={() => setOpen2(!open2)}
-              onSelect={(val: string) => {
-                setOpen2(!open2)
-                setSelectedAggVal(val)
-                update({ chartAggVal: val })
-              }}
-              label='Group Value'
-              open={open2}
-              classes={{ menu: 'min-w-200' }}
-            />
-            <div className='flex flex-row flex-wrap content-center gap-1 justify-end items-center mr-2'>
-              <Switch
-                label='Use Location on Map'
-                onChange={() => update({ useMapLocation: !useMapLocation })}
-                disabled={false}
+            <div>
+              <DropdownSelect
+                data={dataAggKeys}
+                valKey={chartAggKey}
+                onClick={() => setOpen1(!open1)}
+                onSelect={(val: string) => {
+                  setOpen1(!open1)
+                  update({ chartAggKey: val })
+                  update({ selMapLocation: null  })
+                }}
+                label='Group Key'
+                open={open1}
               />
-              <Box sx={{ paddingTop: '1.1rem' }}>
-                <Tooltip title='Click on a location on the map' arrow>
-                  <IconButton aria-label='info' size='small'>
-                    <InfoIcon fontSize='small'/>
-                  </IconButton>
-                </Tooltip>
-              </Box>
+            </div>
+            <div>
+              <DropdownSelect
+                data={[...aggKeyValues]}
+                valKey={selectedAggVal}
+                onClick={() => setOpen2(!open2)}
+                onSelect={(val: string) => {
+                  setOpen2(!open2)
+                  setSelectedAggVal(val)
+                  update({ chartAggVal: val })
+                  update({ selMapLocation: null  })
+                  if (chartAggKey === LAT_LON) {
+                    const [lat, lon] = val.split(' / ')
+                    update({ selChartLocation: { lat: Number(lat), lon: Number(lon) } })
+                  }
+                }}
+                label='Group Value'
+                open={open2}
+              />
             </div>
           </CardActions>
           <CardContent>
