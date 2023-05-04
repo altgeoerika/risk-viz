@@ -10,7 +10,6 @@ import { QLReportMap } from '@geoerika/react-maps'
 import { useData } from '../../../hooks'
 import { useStoreState, useStoreActions } from '../../../store'
 import { YEAR, LAT_LON } from '../../../constants'
-import Button from '../../common-components/button'
 import styles from './map.module.scss'
 
 
@@ -22,8 +21,8 @@ const DropdownSelect = dynamic(
       <Skeleton
         animation='wave'
         variant='rectangular'
-        width='13vw'
-        height='5vh'
+        width='10vw'
+        height='4vh'
       />
     ),
   },
@@ -37,7 +36,22 @@ const Switch = dynamic(
       <Skeleton
         animation='wave'
         variant='rectangular'
-        width='13vw'
+        width='10vw'
+        height='4vh'
+      />
+    ),
+  },
+)
+
+const Button = dynamic(
+  () => import('../../common-components/button'),
+  {
+    ssr: false,
+    loading: () => (
+      <Skeleton
+        animation='wave'
+        variant='rectangular'
+        width='10vw'
         height='4vh'
       />
     ),

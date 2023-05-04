@@ -16,11 +16,15 @@ export const getDataKeyValues = ({ data, key }: { data: RiskData, key: string })
   Array.from(new Set(data?.map(d => d[key])))
 
 // gets all the keys from a nested object in a data column, where the objects don't include values for all keys
-export const getObjKeysFromNestedCol = ({ data, key }: { data: RiskData, key: string }): string[] =>
-  data?.reduce<string[]>((acc, el) => {
+export const getObjKeysFromNestedCol = ({ data, key }: { data: any[], key: string }): string[] => {
+  if (!data) {
+    return []
+  }
+  return data?.reduce<string[]>((acc, el) => {
     const elKeys = Object.keys(el[key])
     return Array.from(new Set([...acc, ...elKeys]))
   }, [])
+}
 
 // flatten data with nested json
 export const getFlatData = ({ data, col, keyList }: { data: RiskData, col: string, keyList: string[] }): (RiskDataObject & RiskFactors)[] =>
@@ -35,6 +39,9 @@ export const getFlatData = ({ data, col, keyList }: { data: RiskData, col: strin
 
 // filter data by multiple filters
 export const filterData = ({ data, filters }: { data: RiskData, filters: RiskFilters }): RiskData => {
+  if (!data) {
+    return []
+  }
   const filterKeys = Object.keys(filters)
   return data?.filter(el =>
     filterKeys.every(key =>
@@ -53,7 +60,10 @@ export const enrichLatLonCol = (data: object[]): object=> {
     const latVal = colLatJoined.values.map((val: any) => val.toString())
     const lonLatCol = colLon.str.concat(latVal, 0)
     df.addColumn(LAT_LON, lonLatCol, { inplace: true })
-    return dfd.toJSON(df) || []
+    if (df) {
+      return dfd.toJSON(df) || []
+    }
+    return []
   }
   return []
 }

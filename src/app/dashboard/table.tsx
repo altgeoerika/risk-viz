@@ -60,7 +60,15 @@ const RiskTable = () => {
       header: col,
       enableClickToCopy: true,
       ...( dataKeyTypes[col] === 'string' &&
-        { columnFilterModeOptions: ['fuzzy', 'contains', 'startsWith', 'endsWith', 'equals', 'notEquals', 'empty', 'notEmpty'] }
+        { columnFilterModeOptions: [
+          'fuzzy', 'contains', 'startsWith', 'endsWith', 'equals', 'notEquals', 'empty', 'notEmpty',
+        ] }
+      ),
+      ...( dataKeyTypes[col] === 'number' &&
+        { columnFilterModeOptions: [
+          'fuzzy', 'contains', 'equals', 'notEquals', 'between', 'betweenInclusive', 'greaterThan',
+          'greaterThanOrEqualTo', 'lessThen', 'lessThanOrEqualTo', 'empty', 'notEmpty',
+        ] }
       ),
     })), [dataKeyTypes])
 
