@@ -3,6 +3,8 @@
 ### [LIVE LINK](https://risk-viz-eight.vercel.app/)
 ### [REPOSITORY](https://github.com/altgeoerika/risk-viz)
 
+[ChatGPT Logs](https://docs.google.com/document/d/1BdEhYGOxmEGQqxYrtn0LRW316ILvcauuntM9NgOTWn0/edit?usp=sharing)
+
 A simple application displaying data in Map, Line Chart & Table. Implemented with React, JavaScript, Node.js, Next.js, Tailwindcss, Deck.gl, Plotly.js, MUI, Material React Table, Headless UI, Danfo.js, AWS, csvtojson.
 
 ## Dashboard
