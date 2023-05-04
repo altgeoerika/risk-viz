@@ -64,6 +64,8 @@ A simple application displaying data in Map, Line Chart & Table. Implemented wit
 
 !["Screenshot of Dashboard Page"](src/assets/screenshots/Dashboard-50.png)
 
+!["Screenshot of Navbar Mobile Menu"](src/assets/screenshots/Navbar-mobile-menu.png)
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
