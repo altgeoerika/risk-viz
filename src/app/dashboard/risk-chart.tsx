@@ -160,7 +160,7 @@ const RiskChart = () => {
   return (
     <>
       {chartData && chartAggKey && (
-        <Card sx={{ width: '100%' }}>
+        <Card>
           <CardActions sx={{
             backgroundColor: 'white',
             boxShadow: '0 0.125rem 0.5rem 0 rgba(12, 12, 13, 0.15)',
@@ -172,7 +172,7 @@ const RiskChart = () => {
             alignItems: 'center',
             zIndex: 1,
           }}>
-            <div>
+            <div className='z-10'>
               <DropdownSelect
                 data={dataAggKeys}
                 valKey={chartAggKey}
