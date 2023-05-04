@@ -18,7 +18,7 @@ export interface RiskFactors {
 }
 
 export interface RiskDataObject {
-  original: any
+  original?: any
   Lat: number
   Lon: number
   ['Asset Name']: string
@@ -32,7 +32,7 @@ export interface RiskDataObject {
 export type RiskData = RiskDataObject[]
 
 export interface RiskFilters {
-  [key: string]: string | number
+  [key: string]: string | number | number[]
 }
 
 export interface RiskDataModel {
